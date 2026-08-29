@@ -75,6 +75,18 @@ if [[ "${WRT_TARGET^^}" == *"QUALCOMMAX"* ]]; then
 fi
 
 # =========================================================
+# 修复第三方插件 postinst 脚本在 rootfs 打包阶段报错 (exit 0)
+# =========================================================
+find ./feeds/ ./package/ -type f -name "Makefile" 2>/dev/null | while read -r PKG_MK; do
+	if grep -q "define Package/.*/postinst" "$PKG_MK" 2>/dev/null; then
+		# 避免在 rootfs 构建时因找不到 uci-defaults 脚本而返回非 0
+		sed -i 's/\(\. \/etc\/uci-defaults\/[a-zA-Z0-9_-]*\)/[ -f "\1" ] \&\& \1 || true/g' "$PKG_MK" 2>/dev/null
+		# 确保所有 postinst 结尾均安全返回 exit 0
+		sed -i '/define Package\/.*\/postinst/,/endef/ s/^\(endef\)/exit 0\n\1/' "$PKG_MK" 2>/dev/null
+	fi
+done
+
+# =========================================================
 # 智能系统调优：优化内存水位线 (min_free_kbytes)
 # =========================================================
 
