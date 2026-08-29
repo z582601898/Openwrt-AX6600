@@ -106,9 +106,9 @@ jobs:
           esac
           echo "WRT_PROFILE=$WRT_PROFILE_UPPER" >> $GITHUB_ENV
           if [[ "$WRT_PROFILE_UPPER" == "PLUS" ]]; then
-            echo "WRT_PROFILE_DESC=Plus 版，预装 OpenClash、PassWall2、Docker/Dockerman、AdGuard Home、DDNS、ttyd、UPnP 及分区扩容、网络唤醒等实用插件，刷完即用；启用 AdGuard Home 与代理插件前请先阅读 README 的「PLUS 版使用提示」" >> $GITHUB_ENV
+            echo "WRT_PROFILE_DESC=Plus 版，预装 iStore 插件商店、Argon 主题、KMS、OpenClash、PassWall2、Docker/Dockerman、AdGuard Home、SmartDNS、MosDNS、Turbo ACC、DDNS-Go、Tailscale/EasyTier、802.11kvr快速漫游等实用插件，特别优化旁路由与有线Mesh组网；启用 AdGuard Home 与代理插件前请先阅读 README 的「PLUS 版使用提示」" >> $GITHUB_ENV
           else
-            echo "WRT_PROFILE_DESC=纯净版，轻量稳定，仅含基础网络与常用管理插件，扩展插件按需自行安装" >> $GITHUB_ENV
+            echo "WRT_PROFILE_DESC=纯净版，轻量稳定，预装 Argon 主题与 KMS，仅含基础网络与常用管理插件，扩展插件按需自行安装" >> $GITHUB_ENV
           fi
           WRT_INFO="${WRT_SOURCE%%/*}"
           echo "WRT_INFO=$WRT_INFO" >> $GITHUB_ENV
@@ -152,10 +152,10 @@ jobs:
             sed -i '/.cn\//d; /tencent/d; /aliyun/d' "$PROJECT_MIRRORS_FILE"
           fi
 
-          # Plus 版补充 PassWall 依赖包 feed（xray/sing-box 等）。
-          # LuCI 插件本体由 Packages.sh 克隆到 package/，这里不再加 LuCI feed，避免同名包双重定义。
+          # Plus 版补充 PassWall 依赖包 feed（xray/sing-box 等）及 iStore 插件商店 feed
           if [[ "$WRT_PROFILE" == "PLUS" ]]; then
             echo "src-git passwall_packages https://github.com/Openwrt-Passwall/openwrt-passwall-packages" >> feeds.conf.default
+            echo "src-git istore https://github.com/linkease/istore;main" >> feeds.conf.default
           fi
 
       - name: Check Scripts
@@ -205,6 +205,9 @@ jobs:
           $GITHUB_WORKSPACE/Scripts/Packages.sh
           if [[ "$WRT_PROFILE" == "PLUS" && -e ../feeds/passwall_packages/.git ]]; then
             echo "passwall_packages(feed) Openwrt-Passwall/openwrt-passwall-packages main $(git -C ../feeds/passwall_packages rev-parse --short HEAD)" >> "$GITHUB_WORKSPACE/package-versions.txt"
+          fi
+          if [[ "$WRT_PROFILE" == "PLUS" && -e ../feeds/istore/.git ]]; then
+            echo "istore(feed) linkease/istore main $(git -C ../feeds/istore rev-parse --short HEAD)" >> "$GITHUB_WORKSPACE/package-versions.txt"
           fi
           if [ -s "$GITHUB_WORKSPACE/package-versions.txt" ]; then
             {

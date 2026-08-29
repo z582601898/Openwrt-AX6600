@@ -52,7 +52,10 @@ UPDATE_PACKAGE() {
 # UPDATE_PACKAGE "open-app-filter" "destan19/OpenAppFilter" "master" "" "luci-app-appfilter oaf" 这样会把原有的open-app-filter，luci-app-appfilter，oaf相关组件删除，不会出现coremark错误。
 
 # UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
-#UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
+# Argon 主题与配置插件
+UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
+UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "master"
+
 #UPDATE_PACKAGE "aurora" "ones20250/luci-theme-aurora" "master"
 #UPDATE_PACKAGE "aurora-config" "ones20250/luci-app-aurora-config" "master"
 #UPDATE_PACKAGE "kucat" "sirpdboy/luci-theme-kucat" "master"
@@ -65,33 +68,18 @@ if [[ "${WRT_PROFILE^^}" == "PLUS" ]]; then
 	# LuCI 入口随 "pkg" 通配一并提取，依赖包（xray、sing-box、geodata 等）
 	# 由 passwall_packages feed 提供，避免同名包双重定义。
 	UPDATE_PACKAGE "openclash" "vernesong/OpenClash" "master" "pkg"
-	#一代 PassWall 已由 PassWall2 取代，fork 者如需可取消注释，并同步启用 Config/GENERAL_AX6600_PLUS.txt 中对应配置段
-	#UPDATE_PACKAGE "passwall" "Openwrt-Passwall/openwrt-passwall" "main" "pkg"
+	# 一代 PassWall 已由 PassWall2 取代，fork 者如需可取消注释，并同步启用 Config/GENERAL_AX6600_PLUS.txt 中对应配置段
+	# UPDATE_PACKAGE "passwall" "Openwrt-Passwall/openwrt-passwall" "main" "pkg"
 	UPDATE_PACKAGE "passwall2" "Openwrt-Passwall/openwrt-passwall2" "main" "pkg"
 	# 分区扩容与网络唤醒：源码仅 PLUS 版拉取，PURE 中同名 =y 配置因无源码自动失效
 	UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
 	UPDATE_PACKAGE "viking" "ones20250/packages" "main" "" "luci-app-timewol luci-app-wolplus"
+	# 旁路由与内网穿透 / 动态域名 / DNS 增强插件
+	UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
+	UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
+	UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
+	UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5" "" "v2dat"
 fi
-
-#UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5" "" "v2dat"
-
-#UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
-
-#UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
-#UPDATE_PACKAGE "diskman" "lisaac/luci-app-diskman" "master"
-#UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
-#UPDATE_PACKAGE "gecoosac" "laipeng668/luci-app-gecoosac" "main"
-#UPDATE_PACKAGE "netspeedtest" "sirpdboy/netspeedtest" "main" "" "homebox speedtest"
-#UPDATE_PACKAGE "openlist2" "sbwml/luci-app-openlist2" "main"
-#UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
-#UPDATE_PACKAGE "qbittorrent" "sbwml/luci-app-qbittorrent" "master" "" "qt6base qt6tools rblibtorrent"
-#UPDATE_PACKAGE "qmodem" "FUjr/QModem" "main"
-#UPDATE_PACKAGE "quickfile" "sbwml/luci-app-quickfile" "main"
-#局域网唤醒
-#UPDATE_PACKAGE "viking" "ones20250/packages" "main" "" "luci-app-timewol luci-app-wolplus"
-#UPDATE_PACKAGE "vnt" "lmq8267/luci-app-vnt" "main"
-#雅典娜的led屏
-#UPDATE_PACKAGE "athena-led" "unraveloop/JDC-AX6600-Athena-LED-Controller" "main"
 
 #更新软件包版本
 UPDATE_VERSION() {

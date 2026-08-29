@@ -31,8 +31,8 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 
 | 版本 | 下载入口 | 适合场景 |
 |------|----------|----------|
-| 🍃 `PURE` 纯净版 | 🎯 **[👉 下载最新 PURE 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PURE&expanded=true)** | 轻量稳定，日常推荐，插件按需自装 |
-| 🚀 `PLUS` 版 | 🎯 **[👉 下载最新 PLUS 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PLUS&expanded=true)** | OpenClash / PassWall2 / Docker / AdGuard Home 开箱即用 |
+| 🍃 `PURE` 纯净版 | 🎯 **[👉 下载最新 PURE 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PURE&expanded=true)** | 轻量稳定，Argon 现代主题 + KMS，插件按需自装 |
+| 🚀 `PLUS` 版 | 🎯 **[👉 下载最新 PLUS 固件](https://github.com/ones20250/Openwrt-AX6600/releases?q=PLUS&expanded=true)** | iStore 商店 / OpenClash / PassWall2 / SmartDNS / 802.11kvr快速漫游 / Docker / 旁路由与Mesh优化 |
 
 > ⭐ 固件对你有用的话，顺手点个 Star —— 这是对持续维护最好的支持！
 
@@ -51,17 +51,18 @@ OpenWrt / AX6600 / IPQ6010 / JDCloud RE-CS-02 / NSS / Router Firmware / Cloud Bu
 |------|------|
 | **编译时间** | 显示的时间为编译开始时间，用于对应上游源码版本 |
 | **版本划分** | 默认同时构建 `PURE` 纯净版与 `PLUS` 版 |
-| **基础功能** | 纯净版保持当前轻量配置，包含完整网络功能栈 |
-| **扩展插件** | Plus 版额外集成 OpenClash、PassWall2、Docker / Dockerman、AdGuard Home、DDNS、ttyd 终端、UPnP 等常用组件，也可通过自定义配置 `.config` 文件增加插件 |
+| **基础功能** | 纯净版保持轻量配置，预装 Argon 主题、KMS 服务与完整网络功能栈 |
+| **扩展插件** | Plus 版额外集成 iStore 应用商店、OpenClash、PassWall2、Docker / Dockerman、AdGuard Home、SmartDNS、MosDNS、Turbo ACC(BBR)、DDNS-Go、Tailscale/EasyTier、802.11kvr 快速漫游与 Mesh 漫游管理组件 |
 | **硬件平台** | 基于 QUALCOMMAX（IPQ6010）架构 |
-| **性能优化** | 针对 IPQ6010 平台进行网络性能调优 |
+| **性能优化** | 针对 IPQ6010 平台进行网络性能调优与 NSS 硬件加速 |
+| **默认 IP** | **`192.168.88.1`**（默认密码为空） |
 
 ### 固件版本
 
 | 版本 | 适合人群 | 预置内容 |
 |------|----------|----------|
-| `PURE` 纯净版 | 希望系统轻量、稳定，按需自行安装插件的用户 | 保持当前配置，预装基础网络与常用管理插件 |
-| `PLUS` 版 | 希望刷完即用常见扩展服务的用户 | 在纯净版基础上增加 OpenClash、PassWall2、Docker / Dockerman、AdGuard Home、DDNS、ttyd 终端、UPnP，以及分区扩容（partexp）、网络唤醒（wolplus）等实用插件 |
+| `PURE` 纯净版 | 希望系统轻量、稳定，按需自行安装插件的用户 | 保持轻量稳定，预装 Argon 主题、KMS 激活服务与基础网络管理插件 |
+| `PLUS` 版 | 旁路由 / 有线 Mesh 接入其他路由 / 开箱即用多功能用户 | 预装 iStore 应用商店、Argon 主题、KMS、OpenClash、PassWall2、Docker、SmartDNS、MosDNS、Turbo ACC、DDNS-Go、Tailscale、EasyTier、Socat、DAWN 无线漫游、分区扩容（partexp）、网络唤醒（wolplus）等 |
 
 > 💡 Releases 中的文件名会包含 `pure` 或 `plus`，请按需求下载对应版本。
 
@@ -189,8 +190,20 @@ Releases 页面每个版本包含以下文件（PURE 与 PLUS 分开发布，Rel
 
 > ⚠️ Plus 版依赖外部插件仓库和上游 feeds，若上游调整包名或依赖，可能需要同步更新 `Config/GENERAL_AX6600_PLUS.txt`。
 
-### PLUS 版使用提示
+### PLUS 版使用与组网提示
 
+- **旁路由模式设置建议**：
+  1. **IP 与网关**：在「网络 → 接口 → LAN」中，修改静态 IP 为与主路由同一网段（例如主路由 `192.168.88.254`，本旁路由设为 `192.168.88.1` 或指定 IP），网关填写主路由 IP，DNS 填写主路由 IP 或 `127.0.0.1`（若使用 SmartDNS/MosDNS）。
+  2. **关闭 DHCP 服务**：在 LAN 接口的「DHCP 服务器」选项中勾选「忽略此接口」（避免与主路由 DHCP 冲突）。
+  3. **物理连接**：网线从主路由 LAN 口连接到本机的 LAN 口（或 WAN 口已桥接至 br-lan）。
+  4. **防火墙动态伪装**：在「网络 → 防火墙」中，确保 lan 区域开启「IP 动态伪装 (Masquerading)」或添加自定义 nftables 转发规则，以确保跨网关流量顺畅返回。
+
+- **有线 AP / Mesh 快速漫游设置建议（接入其他品牌路由器）**：
+  1. **SSID 与密码统一**：将本机的 2.4G / 5G WiFi 名称、加密方式（WPA2-PSK/CCMP）、密码设置得与主路由器完全一致。
+  2. **开启 802.11r 快速漫游**：固件已集成完整的 `wpad-openssl`，在「网络 → 无线」编辑各频段无线时，进入「高级设置」或「无线安全」勾选「802.11r 快速漫游」，并填写相同的 Mobility Domain（例如 `e4b2`），终端在各 AP 之间移动时可实现毫秒级无缝漫游切换。
+  3. **DAWN 分布式漫游控制器**：已预装 `luci-app-dawn`，可根据信号强度（RSSI）自动踢除弱信号死咬客户端，引导终端自动漫游连接至最佳 AP。
+
+- **iStore 应用商店**：可在「iStore」菜单下一键浏览、搜索并安装社区热门插件与 Docker 应用。
 - **AdGuard Home 首次启用**：出厂默认关闭。启用服务后访问 `http://路由器IP:3000` 完成安装向导，向导中 **DNS 监听端口请填 `5553`**（`53` 已被系统 dnsmasq 占用，填 53 会报错）；完成后在 LuCI「网络 → DHCP/DNS」的「DNS 转发」中填入 `127.0.0.1#5553` 并勾选「忽略解析文件」，广告过滤即对全局生效。
 - **代理插件二选一**：OpenClash 与 PassWall2 工作机制相同（接管 DNS + 透明代理规则），同时启用会互相抢占，轻则其中一个失效、分流错乱，重则断网，请只启用其中一个，切换前先停用当前插件。
 - **Docker 存储去向**：Docker 数据默认写入系统分区，容易撑爆。建议先用「分区扩容（partexp）」将空闲 eMMC 挂载为独立分区，再在 Docker 设置中把存储路径指向该分区。
