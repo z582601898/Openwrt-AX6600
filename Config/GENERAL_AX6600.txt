@@ -159,13 +159,9 @@ CONFIG_PACKAGE_luci-app-mountd=y
 CONFIG_PACKAGE_resize2fs=y
 CONFIG_PACKAGE_tune2fs=y
 
-# 无线调节增强与完整 802.11k/v/r / Mesh 漫游支持
+# 无线调节增强
 CONFIG_PACKAGE_iwinfo=y
 CONFIG_PACKAGE_luci-app-wireless-regdb=y
-CONFIG_PACKAGE_wpad-openssl=y
-CONFIG_PACKAGE_wpad-basic-mbedtls=n
-CONFIG_PACKAGE_wpad-basic-openssl=n
-CONFIG_PACKAGE_wpad-basic=n
 
 # KMS 激活服务器
 CONFIG_PACKAGE_luci-app-vlmcsd=y

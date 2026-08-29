@@ -51,11 +51,8 @@ UPDATE_PACKAGE() {
 # UPDATE_PACKAGE "OpenAppFilter" "destan19/OpenAppFilter" "master" "" "custom_name1 custom_name2"
 # UPDATE_PACKAGE "open-app-filter" "destan19/OpenAppFilter" "master" "" "luci-app-appfilter oaf" 这样会把原有的open-app-filter，luci-app-appfilter，oaf相关组件删除，不会出现coremark错误。
 
-# UPDATE_PACKAGE "包名" "项目地址" "项目分支" "pkg/name，可选，pkg为从大杂烩中单独提取包名插件；name为重命名为包名"
-# Argon 主题与配置插件
-UPDATE_PACKAGE "argon" "jerrykuku/luci-theme-argon" "master"
-UPDATE_PACKAGE "argon-config" "jerrykuku/luci-app-argon-config" "master"
-
+# Argon 主题由 feeds 原生提供，无需外部重复克隆
+#UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-25.12"
 #UPDATE_PACKAGE "aurora" "ones20250/luci-theme-aurora" "master"
 #UPDATE_PACKAGE "aurora-config" "ones20250/luci-app-aurora-config" "master"
 #UPDATE_PACKAGE "kucat" "sirpdboy/luci-theme-kucat" "master"
@@ -74,11 +71,10 @@ if [[ "${WRT_PROFILE^^}" == "PLUS" ]]; then
 	# 分区扩容与网络唤醒：源码仅 PLUS 版拉取，PURE 中同名 =y 配置因无源码自动失效
 	UPDATE_PACKAGE "partexp" "sirpdboy/luci-app-partexp" "main"
 	UPDATE_PACKAGE "viking" "ones20250/packages" "main" "" "luci-app-timewol luci-app-wolplus"
-	# 旁路由与内网穿透 / 动态域名 / DNS 增强插件
+	# 旁路由与内网穿透 / 动态域名增强插件
 	UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
 	UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
 	UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
-	UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5" "" "v2dat"
 fi
 
 #更新软件包版本
