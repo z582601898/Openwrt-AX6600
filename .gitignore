@@ -1,1 +1,5 @@
 .idea/
+ghToken.md
+auto_build.py
+*.log
+

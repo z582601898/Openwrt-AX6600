@@ -74,7 +74,6 @@ if [[ "${WRT_PROFILE^^}" == "PLUS" ]]; then
 	# 旁路由与内网穿透 / 动态域名增强插件
 	UPDATE_PACKAGE "ddns-go" "sirpdboy/luci-app-ddns-go" "main"
 	UPDATE_PACKAGE "easytier" "EasyTier/luci-app-easytier" "main"
-	UPDATE_PACKAGE "luci-app-tailscale" "asvow/luci-app-tailscale" "main"
 fi
 
 #更新软件包版本
