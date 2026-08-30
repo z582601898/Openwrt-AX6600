@@ -267,3 +267,7 @@ Releases 页面每个版本包含以下文件（PURE 与 PLUS 分开发布，Rel
 
 本项目固件仅供学习与研究使用，请确认设备型号匹配并提前备份数据。
 因刷机造成的设备损坏或数据丢失，作者不承担任何责任。
+
+## ⚠️ 相关教程
+https://jjj117.blog.csdn.net/article/details/155791523
+https://blog.csdn.net/a924282761/article/details/135991716

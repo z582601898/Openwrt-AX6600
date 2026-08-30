@@ -100,10 +100,29 @@ CONFIG_PACKAGE_ddns-go=y
 CONFIG_PACKAGE_luci-app-socat=y
 CONFIG_PACKAGE_socat=y
 
-# 有线 Mesh / AP 漫游增强（分布式客户端漫游管理与二层中继）
+# 有线 Mesh / AP 漫游与 Mesh 组网增强
 CONFIG_PACKAGE_luci-app-dawn=y
 CONFIG_PACKAGE_dawn=y
+CONFIG_PACKAGE_luci-app-usteer=y
+CONFIG_PACKAGE_usteer=y
+CONFIG_PACKAGE_luci-app-wireless=y
+CONFIG_PACKAGE_luci-app-meshwizard=y
+CONFIG_PACKAGE_luci-app-batman-adv=y
+CONFIG_PACKAGE_kmod-batman-adv=y
+CONFIG_PACKAGE_batctl=y
 CONFIG_PACKAGE_relayd=y
+
+# 流量与系统性能监控统计
+CONFIG_PACKAGE_luci-app-statistics=y
+CONFIG_PACKAGE_collectd=y
+CONFIG_PACKAGE_collectd-mod-cpu=y
+CONFIG_PACKAGE_collectd-mod-interface=y
+CONFIG_PACKAGE_collectd-mod-load=y
+CONFIG_PACKAGE_collectd-mod-memory=y
+CONFIG_PACKAGE_collectd-mod-network=y
+CONFIG_PACKAGE_collectd-mod-wireless=y
+CONFIG_PACKAGE_luci-app-nlbwmon=y
+CONFIG_PACKAGE_nlbwmon=y
 
 # 实用工具（来自官方 feeds；samba4 文件共享已在通用配置 GENERAL_AX6600.txt 中启用）
 # 终端（网页 SSH）
@@ -127,4 +146,5 @@ CONFIG_PACKAGE_kmod-usb-printer=y
 # p910nd 打印服务器及其管理界面
 CONFIG_PACKAGE_p910nd=y
 CONFIG_PACKAGE_luci-app-p910nd=y
+
 
